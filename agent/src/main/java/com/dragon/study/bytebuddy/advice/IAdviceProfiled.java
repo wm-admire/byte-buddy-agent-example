@@ -5,5 +5,5 @@ package com.dragon.study.bytebuddy.advice;
  */
 public interface IAdviceProfiled {
 
-  int profile(int sleepTime, String invalidParam);
+    int profile(int sleepTime, String invalidParam);
 }

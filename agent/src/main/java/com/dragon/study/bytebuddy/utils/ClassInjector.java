@@ -12,28 +12,28 @@ import java.util.Set;
  */
 public class ClassInjector {
 
-  private static Method ADD_URL;
-  private static Set<URL> URL_SET = new HashSet<>();
+    private static Method ADD_URL;
+    private static Set<URL> URL_SET = new HashSet<>();
 
-  static {
-    try {
-      ADD_URL = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-      ADD_URL.setAccessible(true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public boolean injectToURLClassLoader(URL[] urls, URLClassLoader classLoader) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
-    if (urls != null) {
-      for (URL url : urls) {
-        if(!URL_SET.contains(url)) {
-          ADD_URL.invoke(classLoader, url);
-          URL_SET.add(url);
-          return true;
+    static {
+        try {
+            ADD_URL = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+            ADD_URL.setAccessible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-      }
     }
-    return false;
-  }
+
+    public boolean injectToURLClassLoader(URL[] urls, URLClassLoader classLoader) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+        if (urls != null) {
+            for (URL url : urls) {
+                if (!URL_SET.contains(url)) {
+                    ADD_URL.invoke(classLoader, url);
+                    URL_SET.add(url);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

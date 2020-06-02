@@ -1,7 +1,6 @@
 package com.dragon.study.bytebuddy.config;
 
 import com.dragon.study.bytebuddy.bean.Person;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,12 +10,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PersonConfiguration {
 
-  @Bean
-  public Person person() {
-    Person person = new Person();
-    person.setName("longzhe");
-    person.setAge(29);
-    return person;
-  }
+    @Bean
+    public Person person() {
+        Person person = new Person();
+        person.setName("longzhe");
+        person.setAge(29);
+        return person;
+    }
 
 }

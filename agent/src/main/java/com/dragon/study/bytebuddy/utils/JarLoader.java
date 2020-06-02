@@ -9,38 +9,38 @@ import java.util.jar.JarFile;
  */
 public class JarLoader {
 
-  public static URL[] loadMyAgentCoreLib() {
-    // find myagent.jar
-    final ClassPathResolver classPathResolver = new ClassPathResolver();
-    boolean agentJarNotFound = classPathResolver.findAgentJar();
+    public static URL[] loadMyAgentCoreLib() {
+        // find myagent.jar
+        final ClassPathResolver classPathResolver = new ClassPathResolver();
+        boolean agentJarNotFound = classPathResolver.findAgentJar();
 
-    if (!agentJarNotFound) {
-      System.out.println("myagent-x.x.x(-SNAPSHOT).jar Fnot found.");
-      return null;
+        if (!agentJarNotFound) {
+            System.out.println("myagent-x.x.x(-SNAPSHOT).jar Fnot found.");
+            return null;
+        }
+
+        final String myAgentJar = classPathResolver.getMyAgentJar();
+
+        JarFile myAgentJarFile = getBootStrapJarFile(myAgentJar);
+        if (myAgentJarFile == null) {
+            System.out.println("myagent-x.x.x(-SNAPSHOT).jar Fnot found.");
+            return null;
+        }
+
+        System.out.println("load myagent-x.x.x(-SNAPSHOT).jar :" + myAgentJarFile);
+
+        URL[] urls = classPathResolver.resolvePlugins();
+        return urls;
     }
 
-    final String myAgentJar = classPathResolver.getMyAgentJar();
 
-    JarFile myAgentJarFile = getBootStrapJarFile(myAgentJar);
-    if(myAgentJarFile == null) {
-      System.out.println("myagent-x.x.x(-SNAPSHOT).jar Fnot found.");
-      return null;
+    private static JarFile getBootStrapJarFile(String bootStrapCoreJar) {
+        try {
+            return new JarFile(bootStrapCoreJar);
+        } catch (IOException ioe) {
+            System.out.println(bootStrapCoreJar + " file not found.");
+            ioe.printStackTrace();
+            return null;
+        }
     }
-
-    System.out.println("load myagent-x.x.x(-SNAPSHOT).jar :" + myAgentJarFile);
-
-    URL[] urls = classPathResolver.resolvePlugins();
-    return urls;
-  }
-
-
-  private static JarFile getBootStrapJarFile(String bootStrapCoreJar) {
-    try {
-      return new JarFile(bootStrapCoreJar);
-    } catch (IOException ioe) {
-      System.out.println(bootStrapCoreJar + " file not found.");
-      ioe.printStackTrace();
-      return null;
-    }
-  }
 }

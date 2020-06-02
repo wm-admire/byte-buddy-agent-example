@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface Count {
     String name() default "";
 }
