@@ -14,15 +14,7 @@ public class MyAgent {
 
     public static void premain(String arg, Instrumentation instrumentation) {
 
-        String okHttpInterceptor = "com.dragon.study.bytebuddy.okhttp.OkHttpInterceptor";
-        String redisInterceptor = "com.dragon.study.bytebuddy.redis.RedisInterceptor";
-        String metricsInterceptor = "com.dragon.study.bytebuddy.metrics.MetricsInterceptor";
-        String mysqlInterceptor = "com.dragon.study.bytebuddy.mysql.MysqlInterceptor";
-        String thriftServerInterceptor = "com.dragon.study.bytebuddy.thrift.ThriftServerInterceptor";
-        String jerseyInterceptor = "com.dragon.study.bytebuddy.jersey.JerseyDispatcherInterceptor";
-
-
-        new AgentBuilder.Default()
+        new AgentBuilder.Default().disableClassFormatChanges()
                 .with(DebugListener.getListener())
                 .type(named("com.dragon.study.bytebuddy.advice.AdviceProfiled"))
                 .transform(new AdviceProfiledTransformer())
